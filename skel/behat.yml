@@ -1,5 +1,9 @@
 default:
-  extensions: ~
-  paths:
-    features: ../../features
-    bootstrap: ../../features/bootstrap
+  suites:
+    default:
+      paths: [ features/feature ]
+      contexts: [ FeatureContext ]
+    # To repeat for all cake plugins
+    #filter_features:
+    #  paths: [ plugin/feature/ ]
+    #  contexts: [ PluginContext ]

@@ -93,11 +93,14 @@ class BehatShell extends Shell {
 
         // Setup Behat Config
         $file = new File($this->_getPath() . DS . 'skel' . DS . 'behat.yml');
-        $this->out('Copying behat.yml to App/Config...');
-        $file->copy(APP . 'Config'.  DS . 'behat.yml');
+        $this->out('Copying behat.yml to root...');
+        $file->copy(ROOT . DS . 'behat.yml');
         // Setup features dir
-        $this->out('Creating features directory...');
-        mkdir(ROOT . DS . 'features', 0755);
+        $featurePath = ROOT . DS . 'features';
+        if (!is_dir($featurePath)) {
+            $this->out('Creating features directory...');
+            mkdir($featurePath, 0755);
+        }
     }
 
     /**
@@ -127,10 +130,10 @@ class BehatShell extends Shell {
         $args = $this->_cleanArgs($_SERVER['argv']);
 
         if(!in_array('--config', $args) && !in_array('-c', $args) && !$this->_isCommand($args)) {
-            array_push($args, '--config', APP . 'Config' . DS . 'behat.yml');
+            array_push($args, '--config', ROOT . DS . 'Config' . DS . 'behat.yml');
         }
 
-        $this->behatApp->run();
+        $this->behatApp->run(new Symfony\Component\Console\Input\ArgvInput($args));
     }
 
     /**
@@ -162,7 +165,6 @@ class BehatShell extends Shell {
      * @return boolean
      */
     protected function _isCommand($args) {
-        $isCommand = false;
         $definition = $this->behatApp->getDefaultInputDefinition();
         foreach($args as $arg) {
             $arg = str_replace("-", "", $arg);
