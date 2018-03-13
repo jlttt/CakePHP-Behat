@@ -96,9 +96,8 @@ class BehatShell extends Shell {
         $this->out('Copying behat.yml to App/Config...');
         $file->copy(APP . 'Config'.  DS . 'behat.yml');
         // Setup features dir
-        $folder = new Folder($this->_getPath() . DS . 'skel' . DS . 'features');
-        $this->out('Copying features dir into Application Root...');
-        $folder->copy(array('to' => ROOT . 'features'));
+        $this->out('Creating features directory...');
+        mkdir(ROOT . DS . 'features', 0755);
     }
 
     /**
