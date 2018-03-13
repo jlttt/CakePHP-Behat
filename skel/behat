@@ -10,6 +10,6 @@ done
 LIB=$(dirname -- "$LIB")/
 APP=$(dirname $(cd $(dirname $0) && pwd))
 
-exec php -q "$LIB"cake.php -working "$APP" Behat.behat "$@"
+exec php -q "$LIB"cake.php Behat.behat "$@"
 
 exit;

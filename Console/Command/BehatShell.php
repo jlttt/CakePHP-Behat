@@ -98,7 +98,7 @@ class BehatShell extends Shell {
         // Setup features dir
         $folder = new Folder($this->_getPath() . DS . 'skel' . DS . 'features');
         $this->out('Copying features dir into Application Root...');
-        $folder->copy(array('to' => APP . 'features'));
+        $folder->copy(array('to' => ROOT . 'features'));
     }
 
     /**
@@ -119,18 +119,19 @@ class BehatShell extends Shell {
             require_once 'phar://' . $this->minkExtFile . '/init.php';
         }
 
+        $factory = new \Behat\Behat\ApplicationFactory();
+        $this->behatApp = $factory->createApplication();
+
         // Internal encoding to utf8
         mb_internal_encoding('utf8');
         // Get rid of Cake default args
         $args = $this->_cleanArgs($_SERVER['argv']);
-        // Create instance of BehatApplication
-        $this->behatApp = new Behat\Behat\Console\BehatApplication(BEHAT_VERSION);
 
         if(!in_array('--config', $args) && !in_array('-c', $args) && !$this->_isCommand($args)) {
             array_push($args, '--config', APP . 'Config' . DS . 'behat.yml');
         }
 
-        $this->behatApp->run(new Symfony\Component\Console\Input\ArgvInput($args));
+        $this->behatApp->run();
     }
 
     /**
@@ -163,7 +164,7 @@ class BehatShell extends Shell {
      */
     protected function _isCommand($args) {
         $isCommand = false;
-        $definition = $this->behatApp->getDefinition();
+        $definition = $this->behatApp->getDefaultInputDefinition();
         foreach($args as $arg) {
             $arg = str_replace("-", "", $arg);
             if($definition->hasOption($arg) || $definition->hasShortcut($arg)) {
