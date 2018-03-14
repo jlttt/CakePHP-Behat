@@ -25,5 +25,8 @@
         "php": ">=5.3.0",
         "composer/installers": "*",
         "behat/behat": "^3.4"
+    },
+    "autoload": {
+      "psr-4": { "jlttt\\behat\\" : "src/" }
     }
 }
