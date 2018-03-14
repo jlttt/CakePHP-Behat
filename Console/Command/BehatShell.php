@@ -130,7 +130,7 @@ class BehatShell extends Shell {
         $args = $this->_cleanArgs($_SERVER['argv']);
 
         if(!in_array('--config', $args) && !in_array('-c', $args) && !$this->_isCommand($args)) {
-            array_push($args, '--config', ROOT . DS . 'Config' . DS . 'behat.yml');
+            array_push($args, '--config', ROOT . DS . 'behat.yml');
         }
 
         $this->behatApp->run(new Symfony\Component\Console\Input\ArgvInput($args));

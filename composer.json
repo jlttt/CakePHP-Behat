@@ -25,11 +25,5 @@
         "php": ">=5.3.0",
         "composer/installers": "*",
         "behat/behat": "^3.4"
-    },
-    "script": {
-      "post-install-cmd": [
-        "app/Console/cake Behat.behat install",
-        "app/Console/behat --init"
-      ]
     }
 }
